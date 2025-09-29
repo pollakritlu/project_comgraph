@@ -10,6 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_10_channels_B.png
 
 newmtl ClothLight
 Ns 0.000000
@@ -20,6 +21,7 @@ Ke 0.000000 1.000000 1.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_11.png
 
 newmtl Fire
 Ns 159.999985
@@ -30,6 +32,7 @@ Ke 1.000000 1.000000 1.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_12.png
 
 newmtl Glass.001
 Ns 655.768494
@@ -40,6 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd textures/gltf_embedded_13_channels_B.png
 
 newmtl Material.001
 Ns 159.999985
@@ -50,6 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_13_channels_G.png
 
 newmtl Mount
 Ns 250.000000
@@ -60,6 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_14.png
 
 newmtl None
 Ns 1000.000000
@@ -70,6 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_15.png
 
 newmtl SaturnRings
 Ns 1000.000000
@@ -80,6 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_18.png
 
 newmtl Ship.002
 Ns 159.999985
@@ -90,6 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_19_channels_B.png
 
 newmtl Ship.003
 Ns 716.186707
@@ -100,6 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd textures/gltf_embedded_19_channels_G.png
 
 newmtl Trava
 Ns 250.000000
@@ -110,6 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_20.png
 
 newmtl material
 Ns 0.000000
@@ -120,6 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd textures/gltf_embedded_21.png
 
 newmtl material_3
 Ns 0.000000
@@ -130,6 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd textures/gltf_embedded_22_channels_B.png
 
 newmtl material_4
 Ns 0.000000
@@ -140,6 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd textures/gltf_embedded_22_channels_G.png
 
 newmtl tiger-edit
 Ns 499.911987
@@ -150,3 +164,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd textures/gltf_embedded_23.png
