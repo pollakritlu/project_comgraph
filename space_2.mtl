@@ -10,6 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd 1sTONEnEW.001.jpg
 
 newmtl Bag.002
 Ns 250.000000
@@ -20,6 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Bag.002.jpg
 
 newmtl Boti.002
 Ns 209.530762
@@ -30,6 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Boti.002.jpg
 
 newmtl Cloth.002
 Ns 250.000000
@@ -40,6 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Cloth.002.jpg
 
 newmtl Cloth2.002
 Ns 250.000000
@@ -50,6 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Cloth2.002.jpg
 
 newmtl ClothLight.001
 Ns 0.000000
@@ -60,6 +65,7 @@ Ke 0.000000 1.000000 1.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd ClothLight.001.jpg
 
 newmtl Fire.001
 Ns 159.999985
@@ -70,6 +76,7 @@ Ke 1.000000 1.000000 1.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Fire.001.jpg
 
 newmtl Glass.002
 Ns 655.768494
@@ -80,6 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd Glass.002.jpg
 
 newmtl Glass2.001
 Ns 1000.000000
@@ -90,6 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd Glass2.001.jpg
 
 newmtl Lamki.002
 Ns 250.000000
@@ -100,6 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Lamki.002.jpg
 
 newmtl Man.002
 Ns 220.819916
@@ -110,6 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Man.002.jpg
 
 newmtl Material.003
 Ns 159.999985
@@ -120,6 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Material.003.jpg
 
 newmtl Mount.001
 Ns 250.000000
@@ -130,6 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Mount.001.jpg
 
 newmtl None.001
 Ns 1000.000000
@@ -140,6 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd None.001.jpg
 
 newmtl Osheinik.002
 Ns 250.000000
@@ -150,6 +164,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Osheinik.002.jpg
 
 newmtl SaturnRings.001
 Ns 1000.000000
@@ -160,6 +175,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd SaturnRings.001.jpg
 
 newmtl Ship.001
 Ns 159.999985
@@ -170,6 +186,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Ship.001.jpg
 
 newmtl Ship.004
 Ns 716.186707
@@ -180,6 +197,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd Ship.004.jpg
 
 newmtl Trava.001
 Ns 250.000000
@@ -190,6 +208,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd Trava.001.jpg
 
 newmtl material.001
 Ns 0.000000
@@ -200,6 +219,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd material.001.jpg
 
 newmtl material_3.001
 Ns 0.000000
@@ -210,6 +230,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd material_3.001.jpg
 
 newmtl material_4.001
 Ns 0.000000
@@ -220,6 +241,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd material_4.001.jpg
 
 newmtl tiger-edit.001
 Ns 499.911987
@@ -230,3 +252,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
+map_Kd tiger-edit.001.jpg
