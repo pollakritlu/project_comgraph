@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Space Scene + Profile + Textures</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000;
+    overflow: hidden;
+  }
+  #loading {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    background: radial-gradient(circle, rgba(0,0,0,0.8), rgba(0,0,0,1));
+  }
+</style>
+</head>
+
+<body>
+<div id="loading">Loading…</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+
+<script>
+console.log("✅ script loaded");
+
+// ===== Renderer + Scene + Camera =====
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 10000);
+camera.position.set(80, 60, 2000);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 0, 0);
+controls.enableDamping = true;
+
+// ===== Lights =====
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const sunLight = new THREE.DirectionalLight(0xffffff, 1.3);
+sunLight.position.set(50, 100, 50);
+scene.add(sunLight);
+
+// ===== HDRI =====
+const HDR_URL = "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/4k/qwantani_night_puresky_4k.hdr";
+const rgbeLoader = new THREE.RGBELoader();
+rgbeLoader.setDataType(THREE.UnsignedByteType);
+rgbeLoader.load(HDR_URL, (hdrTexture) => {
+  hdrTexture.mapping = THREE.EquirectangularReflectionMapping;
+  scene.background = hdrTexture;
+  scene.environment = hdrTexture;
+  console.log("🌌 HDR Loaded → Loading space_2.obj...");
+  loadSpaceScene();
+});
+
+// ===== ฟังก์ชันสร้างวัสดุแบบ PBR =====
+function createPBR(base, rough, metal, normal, ao, opt = {}) {
+  const tex = new THREE.TextureLoader();
+  const path = "https://pollakritlu.github.io/project_comgraph/textures/";
+
+  const mat = new THREE.MeshStandardMaterial({
+    roughness: 1.0,
+    metalness: 0.2,
+    transparent: opt.transparent || false,
+    opacity: opt.opacity || 1.0,
+    emissive: opt.emissive ? new THREE.Color(...opt.emissive) : 0x000000,
+    emissiveIntensity: opt.emissiveIntensity || 1.0
+  });
+
+  if (base)  mat.map = tex.load(path + base, t => t.flipY = false);
+  if (rough) mat.roughnessMap = tex.load(path + rough, t => t.flipY = false);
+  if (metal) mat.metalnessMap = tex.load(path + metal, t => t.flipY = false);
+  if (normal) {
+    mat.normalMap = tex.load(path + normal, t => t.flipY = false);
+    mat.normalScale.set(1, 1);
+  }
+  if (ao) mat.aoMap = tex.load(path + ao, t => t.flipY = false);
+
+  return mat;
+}
+
+// ===== โหลด space_2.obj + textures =====
+function loadSpaceScene() {
+  const objLoader = new THREE.OBJLoader();
+  objLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
+
+  // ===== Mapping materials สำหรับ space_2 =====
+  const materialMap = {
+    "Mount":       { base:"gltf_embedded_45.png", rough:"gltf_embedded_13_channels_B.png", metal:"gltf_embedded_46_channels_G.png", normal:"gltf_embedded_47.png" },
+    "Trava":       { base:"gltf_embedded_66.png", rough:"gltf_embedded_67_channels_G.png"},
+    "1sTONEnEW":   { base:"gltf_embedded_9.png", rough:"gltf_embedded_9.png", normal:"gltf_embedded_11.png", opt:{metalness:0.8,roughness:0.2} },
+    "SaturnRings": { base:"gltf_embedded_54.png"},
+    "Fire":        { base:"gltf_embedded_47.png", opt:{emissive:[1,0.3,0],emissiveIntensity:3} },
+    "Man.001":     { base:"gltf_embedded_39.png",},
+    "Ship.002":    { base:"gltf_embedded_50.png", rough:"gltf_embedded_52_channels_B.png", metal:"gltf_embedded_52_channels_G.png", normal:"gltf_embedded_5_0.png" },
+    "Ship.003":    { base:"gltf_embedded_60.png"},
+    "Glass.001":   { opt:{metalness:1.0, rough:0 } },
+    "Cloth.001":   { base:"gltf_embedded_18.png", rough:"gltf_embedded_18.png",normal:"gltf_embedded_20.png" },
+    "Cloth2.001":  { base:"gltf_embedded_21.png", rough:"gltf_embedded_21.png",normal:"gltf_embedded_23.png" },
+    "Material.001":{ base:"gltf_embedded_42.png", normal:"gltf_embedded_44.png" },
+    "Lamki.001":   { base:"gltf_embedded_12.png", rough:"gltf_embedded_12.png", normal:"gltf_embedded_14.png" },
+    "Bag.001":     { base:"gltf_embedded_12.png", rough:"gltf_embedded_12.png", normal:"gltf_embedded_14.png" },
+    "Boti.001":    { base:"gltf_embedded_14.png", rough:"gltf_embedded_46_channels_B.png", metal:"gltf_embedded_46_channels_G.png", normal:"gltf_embedded_47.png" },
+    "Osheinik.001":{ base:"gltf_embedded_51.png", normal:"gltf_embedded_50.png" },
+    "tiger-edit":  { base:"gltf_embedded_63.png" },
+    "None":        { base:"gltf_embedded_48.png" }
+  };
+
+  objLoader.load("space_2.obj", (object) => {
+    console.log("🛰 space_2.obj loaded");
+
+    object.traverse((child) => {
+      if (!child.isMesh) return;
+      const matData = materialMap[child.material.name];
+      if (matData) {
+        child.material = createPBR(
+          matData.base, matData.rough, matData.metal, matData.normal, matData.ao, matData.opt
+        );
+      } else {
+        child.material = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 1 });
+      }
+    });
+
+    object.scale.set(100, 100, 100);
+    scene.add(object);
+    loadProfileOBJ();
+  },
+  (xhr) => {
+    const percent = Math.round((xhr.loaded / xhr.total) * 100);
+    document.getElementById("loading").textContent = `Loading Space Scene… ${percent}%`;
+  },
+  (err) => console.error("❌ Load space_2.obj failed:", err));
+}
+
+// ===== โหลด Profile OBJ =====
+function loadProfileOBJ() {
+  const profileLoader = new THREE.OBJLoader();
+  profileLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
+  
+  profileLoader.load("Profile.obj", (profile) => {
+    console.log("🧍 Profile.obj loaded");
+
+    profile.scale.set(250, 250, 250);
+
+
+    const photoTexture = new THREE.TextureLoader().load("https://pollakritlu.github.io/project_comgraph/textures/profile.jpg");
+    photoTexture.flipY = true;
+
+    profile.traverse((child) => {
+      if (child.isMesh) {
+        child.material = new THREE.MeshStandardMaterial({
+          map: photoTexture,
+          metalness: 0.1,
+          roughness: 0.7
+        });
+      }
+    });
+
+    scene.add(profile);
+    document.getElementById("loading").textContent = "✅ โหลดเสร็จแล้ว!";
+    setTimeout(() => document.getElementById("loading").style.display = "none", 1000);
+    animate();
+  },
+  (xhr) => {
+    const percent = Math.round((xhr.loaded / xhr.total) * 100);
+    document.getElementById("loading").textContent = `Loading Profile… ${percent}%`;
+  },
+  (err) => console.error("❌ Load Profile.obj failed:", err));
+}
+
+// ===== Animate =====
+function animate() {
+  controls.update();
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+
+// ===== Resize =====
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>
