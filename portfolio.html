@@ -160,7 +160,7 @@ function loadProfileOBJ() {
 
 
     const photoTexture = new THREE.TextureLoader().load("https://pollakritlu.github.io/project_comgraph/textures/profile.jpg");
-    photoTexture.flipY = true;
+    photoTexture.flipY = false;
 
     profile.traverse((child) => {
       if (child.isMesh) {
