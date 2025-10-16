@@ -29,8 +29,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Barrel_baseColor.png
-map_Bump -bm 1.000000 Barrel_normal.png
+map_Kd textures/Barrel_baseColor.png
+map_Bump textures/-bm 1.000000 Barrel_normal.png
 
 newmtl Books
 Ks 0.500000 0.500000 0.500000
@@ -45,8 +45,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Books_baseColor.png
-map_Bump -bm 1.000000 Books_normal.png
+map_Kd textures/Books_baseColor.png
+map_Bump textures/-bm 1.000000 Books_normal.png
 
 newmtl Cockpit
 Ks 0.500000 0.500000 0.500000
@@ -61,8 +61,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Cockpit_baseColor.png
-map_Bump -bm 1.000000 Cockpit_normal.png
+map_Kd textures/Cockpit_baseColor.png
+map_Bump textures/-bm 1.000000 Cockpit_normal.png
 
 newmtl Earth
 Kd 0.800000 0.800000 0.800000
@@ -78,7 +78,7 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Earth_Atmosphere_baseColor.png
+map_Kd textures/Earth_Atmosphere_baseColor.png
 
 newmtl Earth_Atmosphere
 Ks 0.500000 0.500000 0.500000
@@ -93,7 +93,7 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Earth_Atmosphere_baseColor.png
+map_Kd textures/Earth_Atmosphere_baseColor.png
 
 newmtl Earth_Clouds
 Kd 0.800000 0.800000 0.800000
@@ -123,8 +123,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Engine_baseColor.png
-map_Bump -bm 1.000000 Engine_normal.png
+map_Kd textures/Engine_baseColor.png
+map_Bump textures/-bm 1.000000 Engine_normal.png
 
 newmtl Flame
 Ks 0.500000 0.500000 0.500000
@@ -139,7 +139,7 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Flame_baseColor.png
+map_Kd textures/Flame_baseColor.png
 
 newmtl Lights
 Kd 0.800000 0.800000 0.800000
@@ -169,8 +169,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Piano_baseColor.png
-map_Bump -bm 1.000000 Piano_normal.png
+map_Kd textures/Piano_baseColor.png
+map_Bump textures/-bm 1.000000 Piano_normal.png
 
 newmtl Ropes
 Ks 0.500000 0.500000 0.500000
@@ -185,8 +185,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Ropes_baseColor.png
-map_Bump -bm 1.000000 Ropes_normal.png
+map_Kd textures/Ropes_baseColor.png
+map_Bump textures/-bm 1.000000 Ropes_normal.png
 
 newmtl Ship
 Ks 0.500000 0.500000 0.500000
@@ -200,9 +200,9 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Ship_baseColor.png
+map_Kd textures/Ship_baseColor.png
 map_Ke Ship_emissive.png
-map_Bump -bm 1.000000 Ship_normal.png
+map_Bump textures/-bm 1.000000 Ship_normal.png
 
 newmtl Suitcase
 Ks 0.500000 0.500000 0.500000
@@ -217,8 +217,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd Suitcase_baseColor.png
-map_Bump -bm 1.000000 Suitcase_normal.png
+map_Kd textures/Suitcase_baseColor.png
+map_Bump textures/-bm 1.000000 Suitcase_normal.png
 
 newmtl Trail
 Kd 0.800000 0.800000 0.800000
@@ -248,8 +248,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd TreasureChest.001_baseColor.png
-map_Bump -bm 1.000000 TreasureChest.001_normal.png
+map_Kd textures/TreasureChest.001_baseColor.png
+map_Bump textures/-bm 1.000000 TreasureChest.001_normal.png
 
 newmtl Window
 Kd 0.275924 0.275924 0.275924
@@ -280,8 +280,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd material_baseColor.png
-map_Bump -bm 1.000000 material_normal.png
+map_Kd textures/material_baseColor.png
+map_Bump textures/-bm 1.000000 material_normal.png
 
 newmtl material_14
 Ks 0.500000 0.500000 0.500000
@@ -296,8 +296,8 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd material_14_baseColor.png
-map_Bump -bm 1.000000 material_14_normal.png
+map_Kd textures/material_14_baseColor.png
+map_Bump textures/-bm 1.000000 material_14_normal.png
 
 newmtl material_19
 Ks 0.500000 0.500000 0.500000
@@ -312,5 +312,5 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
-map_Kd material_19_baseColor.png
-map_Bump -bm 1.000000 material_19_normal.png
+map_Kd textures/material_19_baseColor.png
+map_Bump textures/-bm 1.000000 material_19_normal.png
