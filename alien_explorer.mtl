@@ -109,6 +109,7 @@ Pc 0.000000
 Pcr 0.030000
 aniso 0.000000
 anisor 0.000000
+map_Kd textures/Earth_Clouds_baseColor.png
 
 newmtl Engine
 Ks 0.500000 0.500000 0.500000
