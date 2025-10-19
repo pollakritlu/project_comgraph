@@ -100,30 +100,43 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
 
     // ===== ฟังก์ชันสร้างวัสดุแบบ PBR =====
     function createPBR(base, rough, metal, normal, ao, opt = {}) {
-      const tex = new THREE.TextureLoader();
-      const path = "https://pollakritlu.github.io/project_comgraph/textures/";
+  const tex = new THREE.TextureLoader();
+  const path = "https://pollakritlu.github.io/project_comgraph/textures/";
 
-      const mat = new THREE.MeshStandardMaterial({
-        roughness: 1.0,
-        metalness: 0.2,
-        transparent: opt.transparent || false,
-        opacity: opt.opacity || 1.0,
-        emissive: opt.emissive ? new THREE.Color(...opt.emissive) : 0x000000,
-        emissiveIntensity: opt.emissiveIntensity || 1.0,
-        side: THREE.DoubleSide
-      });
+  const mat = new THREE.MeshStandardMaterial({
+    roughness: 1.0,
+    metalness: 0.2,
+    transparent: !!opt.transparent,
+    opacity: opt.opacity != null ? opt.opacity : 1.0,
+    emissive: opt.emissive ? new THREE.Color(...opt.emissive) : 0x000000,
+    emissiveIntensity: opt.emissiveIntensity || 1.0,
+    side: THREE.DoubleSide
+  });
 
-      if (base) mat.map = tex.load(path + base, t => t.flipY = false);
-      if (rough) mat.roughnessMap = tex.load(path + rough, t => t.flipY = false);
-      if (metal) mat.metalnessMap = tex.load(path + metal, t => t.flipY = false);
-      if (normal) {
-        mat.normalMap = tex.load(path + normal, t => t.flipY = false);
-        mat.normalScale.set(1, 1);
-      }
-      if (ao) mat.aoMap = tex.load(path + ao, t => t.flipY = false);
+  // อ่านค่าที่ส่งมาทับค่าเริ่มต้น
+  if (opt.roughness != null) mat.roughness = opt.roughness;
+  if (opt.metalness != null) mat.metalness = opt.metalness;
 
-      return mat;
-    }
+  // โหลดเท็กซ์เจอร์ + ตั้ง sRGB สำหรับ color map
+  const loadMap = (name) => {
+    const t = tex.load(path + name, (tt) => { tt.flipY = false; });
+    return t;
+  };
+  if (base) {
+    mat.map = loadMap(base);
+    mat.map.encoding = THREE.sRGBEncoding;
+  }
+  if (rough) mat.roughnessMap = loadMap(rough);
+  if (metal)  mat.metalnessMap = loadMap(metal);
+  if (normal) {
+    mat.normalMap = loadMap(normal);
+    mat.normalScale.set(1, 1);
+  }
+  if (ao)     mat.aoMap = loadMap(ao); // ใช้ได้ถ้าโมเดลมี uv2
+
+  return mat;
+}
+
 
     // ===== โหลด space_2.obj + textures =====
     function loadSpaceScene() {
