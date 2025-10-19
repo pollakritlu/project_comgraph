@@ -99,29 +99,29 @@ illum 2
 map_Kd textures/Ropes_baseColor.png
 
 newmtl Ship
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.000000 0.000000 0.000000
-Ke 1.000000 1.000000 1.000000
-Ni 1.500000
-d 1.000000
-illum 2
-
-# ===== PBR Textures =====
+# --- Base Color ---
 map_Kd textures/Ship_baseColor.png
 
-# ใช้ MetallicRoughness map ร่วมกัน
-map_Pm textures/Ship_metallicRoughness.png  # metalness map
-map_Pr textures/Ship_metallicRoughness.png  # roughness map
-
-# แผนที่ความสว่าง (Emission)
+# --- Emissive ---
 map_Ke textures/Ship_emissive.png
-
-# ===== ปรับค่าสำหรับความเงา/โลหะ =====
-Pr 0.4
-Pm 1.0
 Ke 1.0 1.0 1.0
+
+# --- Metalness / Roughness (ใช้ภาพเดียวกัน) ---
+# เพราะ Three.js 0.128 ยังไม่อ่าน map_Pm / map_Pr
+# เราจะ “หลอก” ให้ใช้ภาพนี้แทน normal map เพื่อดึงค่าความเข้มโลหะ/หยาบแบบใกล้เคียง
+map_Bump -bm 1.0 textures/Ship_metallicRoughness.png
+
+# --- ค่าคงที่ ---
+Ka 1.0 1.0 1.0
+Kd 1.0 1.0 1.0
+Ks 0.2 0.2 0.2
+d 1.0
+illum 2
+Ni 1.500000
+
+# --- ปรับให้ไม่โปร่งใส / ไม่เงาเกินไป ---
+Ns 100.0
+
 
 newmtl Suitcase
 Ns 250.000000
