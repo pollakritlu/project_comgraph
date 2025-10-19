@@ -110,7 +110,6 @@ illum 2
 
 # ===== PBR Textures =====
 map_Kd textures/Ship_baseColor.png
-map_d textures/Ship_baseColor.png
 
 # ใช้ MetallicRoughness map ร่วมกัน
 map_Pm textures/Ship_metallicRoughness.png  # metalness map
