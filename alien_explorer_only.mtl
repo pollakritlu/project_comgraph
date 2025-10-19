@@ -99,18 +99,30 @@ illum 2
 map_Kd textures/Ropes_baseColor.png
 
 newmtl Ship
-Ks 0.500000 0.500000 0.500000
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 1.000000 1.000000 1.000000
 Ni 1.500000
 d 1.000000
 illum 2
-Pr 0.500000
-Pm 0.000000
-Ps 0.000000
-Pc 0.000000
-Pcr 0.030000
-aniso 0.000000
-anisor 0.000000
+
+# ===== PBR Textures =====
 map_Kd textures/Ship_baseColor.png
+map_d textures/Ship_baseColor.png
+
+# ใช้ MetallicRoughness map ร่วมกัน
+map_Pm textures/Ship_metallicRoughness.png  # metalness map
+map_Pr textures/Ship_metallicRoughness.png  # roughness map
+
+# แผนที่ความสว่าง (Emission)
+map_Ke textures/Ship_emissive.png
+
+# ===== ปรับค่าสำหรับความเงา/โลหะ =====
+Pr 0.4
+Pm 1.0
+Ke 1.0 1.0 1.0
 
 newmtl Suitcase
 Ns 250.000000
