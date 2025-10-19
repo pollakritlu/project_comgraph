@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<title>Space Scene + Profile + Textures</title>
+<title>Space Scene + Profile + Alien Explorer</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   html, body {
@@ -32,6 +32,7 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
 
 <script>
 console.log("✅ script loaded");
@@ -100,15 +101,13 @@ function loadSpaceScene() {
   const objLoader = new THREE.OBJLoader();
   objLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
 
-  // ===== Mapping materials สำหรับ space_2 =====
   const materialMap = {
     "Mount":       { base:"gltf_embedded_45.png", rough:"gltf_embedded_13_channels_B.png", metal:"gltf_embedded_46_channels_G.png", normal:"gltf_embedded_47.png" },
     "Trava":       { base:"gltf_embedded_66.png", rough:"gltf_embedded_67_channels_G.png"},
     "1sTONEnEW":   { base:"gltf_embedded_9.png", rough:"gltf_embedded_9.png", normal:"gltf_embedded_11.png", opt:{metalness:0.8,roughness:0.2} },
     "SaturnRings": { base:"gltf_embedded_54.png"},
     "Fire":        { base:"gltf_embedded_47.png", opt:{emissive:[1,0.3,0],emissiveIntensity:3} },
-    "Man.001":     { base:"gltf_embedded_39.png",},
-    "Ship.002":    { base:"gltf_embedded_50.png", rough:"gltf_embedded_52_channels_B.png", metal:"gltf_embedded_52_channels_G.png", normal:"gltf_embedded_5_0.png" },
+    "Man.001":     { base:"gltf_embedded_39.png"},
     "Ship.003":    { base:"gltf_embedded_60.png"},
     "Glass.001":   { opt:{metalness:1.0, rough:0 } },
     "Cloth.001":   { base:"gltf_embedded_18.png", rough:"gltf_embedded_18.png",normal:"gltf_embedded_20.png" },
@@ -148,6 +147,32 @@ function loadSpaceScene() {
   (err) => console.error("❌ Load space_2.obj failed:", err));
 }
 
+// ===== โหลด Alien Explorer OBJ + MTL =====
+let alienModel;
+function loadAlienExplorer() {
+  const mtlLoader = new THREE.MTLLoader();
+  mtlLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
+  mtlLoader.load("alien_explorer_only.mtl", (materials) => {
+    materials.preload();
+    const objLoader = new THREE.OBJLoader();
+    objLoader.setMaterials(materials);
+    objLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
+    objLoader.load("alien_explorer_only.obj", (alien) => {
+      console.log("👽 Alien Explorer loaded");
+      alien.scale.set(250, 250, 250);
+      alien.position.set(300, 0, 0); 
+      alien.rotation.y = Math.PI / 4;
+      scene.add(alien);
+      alienModel = alien;
+    },
+    (xhr) => {
+      const percent = Math.round((xhr.loaded / xhr.total) * 100);
+      document.getElementById("loading").textContent = `Loading Alien Explorer… ${percent}%`;
+    },
+    (err) => console.error("❌ Load alien_explorer.obj failed:", err));
+  });
+}
+
 // ===== โหลด Profile OBJ =====
 function loadProfileOBJ() {
   const profileLoader = new THREE.OBJLoader();
@@ -155,9 +180,7 @@ function loadProfileOBJ() {
   
   profileLoader.load("Profile.obj", (profile) => {
     console.log("🧍 Profile.obj loaded");
-
     profile.scale.set(250, 250, 250);
-
 
     const photoTexture = new THREE.TextureLoader().load("https://pollakritlu.github.io/project_comgraph/textures/profile.jpg");
     photoTexture.flipY = false;
@@ -175,6 +198,7 @@ function loadProfileOBJ() {
     scene.add(profile);
     document.getElementById("loading").textContent = "✅ โหลดเสร็จแล้ว!";
     setTimeout(() => document.getElementById("loading").style.display = "none", 1000);
+    loadAlienExplorer();
     animate();
   },
   (xhr) => {
@@ -185,7 +209,9 @@ function loadProfileOBJ() {
 }
 
 // ===== Animate =====
+let clock = new THREE.Clock();
 function animate() {
+  const t = clock.getElapsedTime();
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
