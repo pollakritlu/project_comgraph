@@ -251,19 +251,20 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
         (err) => console.error("❌ Load Profile.obj failed:", err));
     }
 
-function loadFontObjects() {
+    function loadFontObjects() {
   const loader = new THREE.OBJLoader();
   loader.setPath("https://pollakritlu.github.io/project_comgraph/");
 
   const TRANSFORM_ORDER = ["drive", "back1", "back2", "project", "credit", "aboutme"];
-  const deg2rad = d => (d * Math.PI) / 180;
-  const TRANSFORMS = {
-    drive:   { pos: [-8.3513, -48.198, 12.505], rotDeg: [96.916, -14.704, -204.53] },
-    back1:   { pos: [-0.11016, -0.38753, 0.073444], rotDeg: [90.139, 0.38655, -57.48] },
-    back2:   { pos: [-8.8119, -45.962, 12.147], rotDeg: [96.916, -14.704, -204.53] },
-    project: { pos: [26.71, -68.642, 29.015], rotDeg: [90.139, 0.38655, -274.16] },
-    credit:  { pos: [26.71, -68.642, 28.5], rotDeg: [90.139, 0.38655, -274.16] },
-    aboutme: { pos: [26.71, -68.641, 28.759], rotDeg: [90.139, 0.38655, -274.16] }
+  
+  // กำหนดตำแหน่งของโมเดลแต่ละตัว
+  const POSITIONS = {
+    drive:   [-86.0, 3386.0, 254.0],
+    back1:   [-60.0, -6.0, -1.7],
+    back2:   [-371.0, 3406.0, 355.0],
+    project: [2000.0, -1886.0, -1757.0],
+    credit:  [4300.0, -1286.0, -2757.0],
+    aboutme: [4300.0, -1296.0, -2757.0]
   };
 
   TRANSFORM_ORDER.forEach((name) => {
@@ -274,22 +275,14 @@ function loadFontObjects() {
       (obj) => {
         console.log(`✅ Loaded: ${filename}`);
 
-        // === ใช้ค่าจาก Blender ===
-        const t = TRANSFORMS[name];
-        obj.position.set(t.pos[0], t.pos[1], t.pos[2]);
-        obj.rotation.set(
-          deg2rad(t.rotDeg[0]),
-          deg2rad(t.rotDeg[1]),
-          deg2rad(t.rotDeg[2])
-        );
+        // สลับแกน Y และ Z
+        const pos = POSITIONS[name];
+        obj.position.set(pos[0], pos[2], pos[1]); // สลับ Y กับ Z
 
-        // === ปรับแกนจาก Z-Up → Y-Up ===
-        obj.rotation.x -= Math.PI / 2;
-
-        // === ขยายให้เห็นแน่นอน (Blender scale = 1 → มองไม่เห็นใน Three.js) ===
+        // ขยายให้เห็นแน่นอน (Blender scale = 1 → มองไม่เห็นใน Three.js)
         obj.scale.set(100, 100, 100);
 
-        // === เพิ่มวัสดุให้มองเห็นแน่ ๆ ===
+        // เพิ่มวัสดุให้มองเห็นแน่ ๆ
         obj.traverse((child) => {
           if (child.isMesh) {
             child.material = new THREE.MeshStandardMaterial({
@@ -302,12 +295,12 @@ function loadFontObjects() {
 
         scene.add(obj);
 
-        // === Debug: ดูตำแหน่งจริงของโมเดล ===
+        // Debug: ดูตำแหน่งจริงของโมเดล
         const helper = new THREE.BoxHelper(obj, 0xff00ff);
         scene.add(helper);
       },
       undefined,
-      (err) => console.error(`❌ Failed to load ${file}`, err)
+      (err) => console.error(`❌ Failed to load ${filename}`, err)
     );
   });
 }
