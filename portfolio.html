@@ -50,35 +50,20 @@
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 10000);
-    camera.position.set(80, 60, 2000);
-    // ===== Controls (หมุน / เลื่อน / ซูม ได้เต็มที่) =====
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 0, 0);
+    camera.position.set(2300, 1620, 4330);
 
-// เปิดการหมุน (Orbit)
-controls.enableRotate = true;
-
-// เปิดการเลื่อน (Pan)
-controls.enablePan = true;
-controls.panSpeed = 0.5;
-
-// เปิดการซูมเข้าออก
-controls.enableZoom = true;
-controls.zoomSpeed = 1.0;
-
-// หน่วงการเคลื่อนไหวให้นุ่มนวล
-controls.enableDamping = true;
-controls.dampingFactor = 0.05;
-
-// จำกัดระยะกล้อง (กันกล้องเข้าไปในโมเดล)
-controls.minDistance = 100;
-controls.maxDistance = 10000;
-
-// จำกัดมุมกล้อง (ถ้าอยากหมุนรอบเต็ม 360 องศา ให้เอาออก)
-controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบสุดด้านล่าง
-
-// เรียก update ใน animate()
-
+    // ===== Controls =====
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(-1000, 1200, 3700);
+    controls.enableRotate = false;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    controls.maxDistance = 10000;
+    controls.minDistance = 100;
+    controls.maxPolarAngle = Math.PI / 1.5;
+    controls.enableDamping = false;
+    controls.dampingFactor = 0.1;
+    controls.screenSpacePanning = false;
 
     // ===== Lights =====
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
@@ -98,47 +83,44 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
       loadSpaceScene();
     });
 
-    // ===== ฟังก์ชันสร้างวัสดุแบบ PBR =====
+    // ===== PBR =====
     function createPBR(base, rough, metal, normal, ao, opt = {}) {
-  const tex = new THREE.TextureLoader();
-  const path = "https://pollakritlu.github.io/project_comgraph/textures/";
+      const tex = new THREE.TextureLoader();
+      const path = "https://pollakritlu.github.io/project_comgraph/textures/";
 
-  const mat = new THREE.MeshStandardMaterial({
-    roughness: 1.0,
-    metalness: 0.2,
-    transparent: !!opt.transparent,
-    opacity: opt.opacity != null ? opt.opacity : 1.0,
-    emissive: opt.emissive ? new THREE.Color(...opt.emissive) : 0x000000,
-    emissiveIntensity: opt.emissiveIntensity || 1.0,
-    side: THREE.DoubleSide
-  });
+      const mat = new THREE.MeshStandardMaterial({
+        roughness: 1.0,
+        metalness: 0.2,
+        transparent: !!opt.transparent,
+        opacity: opt.opacity != null ? opt.opacity : 1.0,
+        emissive: opt.emissive ? new THREE.Color(...opt.emissive) : 0x000000,
+        emissiveIntensity: opt.emissiveIntensity || 1.0,
+        side: THREE.DoubleSide
+      });
 
-  // อ่านค่าที่ส่งมาทับค่าเริ่มต้น
-  if (opt.roughness != null) mat.roughness = opt.roughness;
-  if (opt.metalness != null) mat.metalness = opt.metalness;
+      if (opt.roughness != null) mat.roughness = opt.roughness;
+      if (opt.metalness != null) mat.metalness = opt.metalness;
 
-  // โหลดเท็กซ์เจอร์ + ตั้ง sRGB สำหรับ color map
-  const loadMap = (name) => {
-    const t = tex.load(path + name, (tt) => { tt.flipY = false; });
-    return t;
-  };
-  if (base) {
-    mat.map = loadMap(base);
-    mat.map.encoding = THREE.sRGBEncoding;
-  }
-  if (rough) mat.roughnessMap = loadMap(rough);
-  if (metal)  mat.metalnessMap = loadMap(metal);
-  if (normal) {
-    mat.normalMap = loadMap(normal);
-    mat.normalScale.set(1, 1);
-  }
-  if (ao)     mat.aoMap = loadMap(ao); // ใช้ได้ถ้าโมเดลมี uv2
+      const loadMap = (name) => {
+        const t = tex.load(path + name, (tt) => { tt.flipY = false; });
+        return t;
+      };
+      if (base) {
+        mat.map = loadMap(base);
+        mat.map.encoding = THREE.sRGBEncoding;
+      }
+      if (rough) mat.roughnessMap = loadMap(rough);
+      if (metal) mat.metalnessMap = loadMap(metal);
+      if (normal) {
+        mat.normalMap = loadMap(normal);
+        mat.normalScale.set(1, 1);
+      }
+      if (ao) mat.aoMap = loadMap(ao);
 
-  return mat;
-}
+      return mat;
+    }
 
-
-    // ===== โหลด space_2.obj + textures =====
+    // ===== load space_2.obj + textures =====
     function loadSpaceScene() {
       const objLoader = new THREE.OBJLoader();
       objLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
@@ -189,7 +171,7 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
         (err) => console.error("❌ Load space_2.obj failed:", err));
     }
 
-    // ===== โหลด Alien Explorer OBJ + MTL =====
+    // ===== load Alien Explorer OBJ + MTL =====
     let alienModel;
     function loadAlienExplorer() {
       const mtlLoader = new THREE.MTLLoader();
@@ -202,7 +184,7 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
         objLoader.load("alien_explorer_only.obj", (alien) => {
           console.log("👽 Alien Explorer loaded");
           alien.scale.set(250, 250, 250);
-          alien.position.set(-2500, 550, 3000);
+          alien.position.set(-602.1, 1268.6, 4693.6);
           alien.rotation.y = Math.PI / 3;
           scene.add(alien);
           alienModel = alien;
@@ -215,7 +197,7 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
       });
     }
 
-    // ===== โหลด Profile OBJ =====
+    // ===== load Profile OBJ =====
     function loadProfileOBJ() {
       const profileLoader = new THREE.OBJLoader();
       profileLoader.setPath("https://pollakritlu.github.io/project_comgraph/");
@@ -241,7 +223,7 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
         document.getElementById("loading").textContent = "✅ โหลดเสร็จแล้ว!";
         setTimeout(() => document.getElementById("loading").style.display = "none", 1000);
         loadAlienExplorer();
-        loadFontObjects(); // โหลดทั้งหมด
+        loadFontObjects();
         animate();
       },
         (xhr) => {
@@ -251,65 +233,214 @@ controls.maxPolarAngle = Math.PI / 1.05; // มองได้เกือบส
         (err) => console.error("❌ Load Profile.obj failed:", err));
     }
 
+    // ===== load button =====
     function loadFontObjects() {
-  const loader = new THREE.OBJLoader();
-  loader.setPath("https://pollakritlu.github.io/project_comgraph/");
+      const loader = new THREE.OBJLoader();
+      loader.setPath("https://pollakritlu.github.io/project_comgraph/");
 
-  const TRANSFORM_ORDER = ["drive", "back1", "back2", "project", "credit", "aboutme"];
-  
-  // กำหนดตำแหน่งของโมเดลแต่ละตัว
-  const POSITIONS = {
-    drive:   [-86.0, 3386.0, 254.0],
-    back1:   [-60.0, -6.0, -1.7],
-    back2:   [-371.0, 3406.0, 355.0],
-    project: [2000.0, -1886.0, -1757.0],
-    credit:  [4300.0, -1286.0, -2757.0],
-    aboutme: [4300.0, -1296.0, -2757.0]
-  };
+      const TRANSFORM_ORDER = ["drive", "back1", "back2", "project", "credit", "aboutme"];
 
-  TRANSFORM_ORDER.forEach((name) => {
-    const filename = `${name}.obj`;
+      const objects = {};
 
-    loader.load(
-      filename,
-      (obj) => {
-        console.log(`✅ Loaded: ${filename}`);
+      const POSITIONS = {
+        drive: [-86.0, -15.0, 110.0],
+        back1: [-60.0, -6.0, -1.7],
+        back2: [-371.0, 0.0, 125.0],
+        project: [-1000.0, -2700.0, -1300.0],
+        credit: [-1000.0, -2700.0, -1320.0],
+        aboutme: [-1000.0, -2700.0, -1310.0]
+      };
 
-        // สลับแกน Y และ Z
-        const pos = POSITIONS[name];
-        obj.position.set(pos[0], pos[2], pos[1]); // สลับ Y กับ Z
+      const CAMERA_POSITIONS = {
+        drive: {
+          camera: [-880, 1380, 3950],
+          target: [-1110.0, 1200.0, 4800.0]
+        },
+        back1: {
+          camera: [2300, 1620, 4330],
+          target: [-1000, 1200, 3700]
+        },
+        back2: {
+          camera: [2300, 1620, 4330],
+          target: [-1000, 1200, 3700]
+        },
+        project: {
+          camera: [-879.4, 1424.4, 4050.7],
+          target: [-1086.9, 1261.9, 4799.8]
+        },
+        credit: {
+          camera: [144.5, 147.2, 18.7],
+          target: [119.8, 90.8, 577.7]
+        },
+        aboutme: {
+          camera: [-237, 66, 103],
+          target: [-56.0, 42.0, -5.0]
+        }
+      };
 
-        // ขยายให้เห็นแน่นอน (Blender scale = 1 → มองไม่เห็นใน Three.js)
-        obj.scale.set(100, 100, 100);
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+      let hoveredObject = null;
 
-        // เพิ่มวัสดุให้มองเห็นแน่ ๆ
-        obj.traverse((child) => {
-          if (child.isMesh) {
-            child.material = new THREE.MeshStandardMaterial({
-              color: 0xffffff,
-              metalness: 0.2,
-              roughness: 0.7
-            });
+      // Mouse move event for hover effect
+      renderer.domElement.addEventListener('mousemove', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(Object.values(objects), true);
+
+        // Reset previous hovered object
+        if (hoveredObject) {
+          hoveredObject.traverse((child) => {
+            if (child.isMesh && child.userData.originalColor) {
+              child.material.emissive.setHex(0x000000);
+              child.material.emissiveIntensity = 0;
+            }
+          });
+          document.body.style.cursor = 'default';
+          hoveredObject = null;
+        }
+
+        // Set new hovered object
+        if (intersects.length > 0) {
+          let currentObj = intersects[0].object;
+          while (currentObj.parent) {
+            if (objects[currentObj.name]) {
+              hoveredObject = currentObj;
+              break;
+            }
+            currentObj = currentObj.parent;
           }
-        });
 
-        scene.add(obj);
+          if (hoveredObject) {
+            hoveredObject.traverse((child) => {
+              if (child.isMesh) {
+                child.material.emissive.setHex(0xff00ff);
+                child.material.emissiveIntensity = 0.5;
+              }
+            });
+            document.body.style.cursor = 'pointer';
+          }
+        }
+      });
 
-        // Debug: ดูตำแหน่งจริงของโมเดล
-        const helper = new THREE.BoxHelper(obj, 0xff00ff);
-        scene.add(helper);
-      },
-      undefined,
-      (err) => console.error(`❌ Failed to load ${filename}`, err)
-    );
-  });
-}
+      renderer.domElement.addEventListener('click', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-    // ===== Animate =====
-    let clock = new THREE.Clock();
+        raycaster.setFromCamera(mouse, camera);
+
+        const intersects = raycaster.intersectObjects(Object.values(objects), true);
+
+        if (intersects.length > 0) {
+          let objectName = null;
+          let currentObj = intersects[0].object;
+
+          while (currentObj.parent) {
+            if (objects[currentObj.name]) {
+              objectName = currentObj.name;
+              break;
+            }
+            currentObj = currentObj.parent;
+          }
+
+          if (objectName && CAMERA_POSITIONS[objectName]) {
+            const config = CAMERA_POSITIONS[objectName];
+            const cameraPos = new THREE.Vector3(...config.camera);
+            const targetPos = new THREE.Vector3(...config.target);
+
+            lerpCamera(cameraPos, targetPos, 2000);
+          }
+        }
+      });
+
+      TRANSFORM_ORDER.forEach((name) => {
+        const filename = `${name}.obj`;
+
+        loader.load(
+          filename,
+          (obj) => {
+            console.log(`✅ Loaded: ${filename}`);
+
+            obj.name = name;
+            objects[name] = obj;
+
+            const pos = POSITIONS[name];
+            obj.position.set(pos[0], pos[2], pos[1]);
+
+            obj.scale.set(100, 100, 100);
+
+            obj.traverse((child) => {
+              if (child.isMesh) {
+                child.material = new THREE.MeshStandardMaterial({
+                  color: 0xffffff,
+                  metalness: 0.2,
+                  roughness: 0.7,
+                  emissive: new THREE.Color(0x000000)
+                });
+
+                child.userData.originalColor = child.material.color.clone();
+              }
+            });
+
+            scene.add(obj);
+          },
+          undefined,
+          (err) => console.error(`❌ Failed to load ${filename}`, err)
+        );
+      });
+    }
+
+    // ===== Lerp Camera Position and Target =====
+    function lerpCamera(targetCameraPos, targetControlsTarget, duration) {
+      const startCameraPos = camera.position.clone();
+      const startControlsTarget = controls.target.clone();
+      const startTime = performance.now();
+
+      function updateCameraPosition() {
+        const elapsedTime = performance.now() - startTime;
+        const t = Math.min(elapsedTime / duration, 1);
+
+        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+        camera.position.lerpVectors(startCameraPos, targetCameraPos, eased);
+        controls.target.lerpVectors(startControlsTarget, targetControlsTarget, eased);
+
+        if (t < 1) {
+          requestAnimationFrame(updateCameraPosition);
+        }
+      }
+
+      updateCameraPosition();
+    }
+
+    // Debug Camera Position Overlay
+    //    const camDebug = document.createElement('div');
+    //  camDebug.style.position = 'fixed';
+    // camDebug.style.bottom = '10px';
+    //camDebug.style.left = '10px';
+    //camDebug.style.background = 'rgba(0,0,0,0.7)';
+    //camDebug.style.color = '#fff';
+    //camDebug.style.fontFamily = 'monospace';
+    //camDebug.style.fontSize = '14px';
+    //camDebug.style.padding = '6px 10px';
+    //camDebug.style.borderRadius = '6px';
+    //camDebug.style.zIndex = '9999';
+    //document.body.appendChild(camDebug);
+
+    //function updateCamDebug() {
+    //const pos = camera.position;
+    //const tgt = controls.target;
+    // camDebug.textContent = `Camera Position: [${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}]\nTarget: [${tgt.x.toFixed(1)}, ${tgt.y.toFixed(1)}, ${tgt.z.toFixed(1)}]`;
+    // }
+
+    // ===== Animate Function =====
+    const clock = new THREE.Clock();
     function animate() {
       const t = clock.getElapsedTime();
       controls.update();
+//      updateCamDebug();
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     }
